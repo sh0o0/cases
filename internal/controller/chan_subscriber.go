@@ -16,6 +16,9 @@ type ChanSubscriber struct {
 }
 
 func (s *ChanSubscriber) UploadFiles(ctx context.Context, event *Event) error {
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+
 	files := event.toFiles()
 
 	out := s.UseCase.UploadFiles(ctx, files)
