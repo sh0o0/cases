@@ -3,6 +3,7 @@ package main
 import (
 	"cases/internal/controller"
 	"cases/internal/infrastructure"
+	"cases/internal/presenter"
 	"cases/internal/usecase"
 	"context"
 )
@@ -12,7 +13,7 @@ func main() {
 		UseCase: &usecase.SeparatedUseCase{
 			Uploader: &infrastructure.Uploader{},
 		},
-		Messenger: &infrastructure.Messenger{},
+		Presenter: &presenter.Presenter{},
 	}
 
 	subscriber.UploadFiles(context.Background(), &controller.Event{})
