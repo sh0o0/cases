@@ -1,17 +1,12 @@
 package controller
 
 import (
-	"cases/internal/entity"
+	"cases/internal/usecase/ucboundary"
 	"context"
-	"iter"
 )
 
-type IterUseCase interface {
-	UploadFiles(ctx context.Context, files []*entity.File) iter.Seq2[*entity.File, error]
-}
-
 type IterSubscriber struct {
-	UseCase   IterUseCase
+	UseCase   ucboundary.IterUseCase
 	Presenter Presenter
 }
 

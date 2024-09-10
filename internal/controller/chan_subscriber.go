@@ -1,17 +1,12 @@
 package controller
 
 import (
-	"cases/internal/entity"
-	"cases/internal/usecase"
+	"cases/internal/usecase/ucboundary"
 	"context"
 )
 
-type ChanUseCase interface {
-	UploadFiles(ctx context.Context, files []*entity.File) chan *usecase.Result[*entity.File]
-}
-
 type ChanSubscriber struct {
-	UseCase   ChanUseCase
+	UseCase   ucboundary.ChanUseCase
 	Presenter Presenter
 }
 
