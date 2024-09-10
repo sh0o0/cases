@@ -2,22 +2,20 @@ package usecase
 
 import (
 	"cases/internal/entity"
+	"cases/internal/usecase/ucboundary"
 	"context"
 	"fmt"
 	"sync"
 )
 
-type Result[T any] struct {
-	Value T
-	Err   error
-}
+var _ ucboundary.ChanUseCase = (*ChanUseCase)(nil)
 
 type ChanUseCase struct {
 	Uploader Uploader
 }
 
-func (u *ChanUseCase) UploadFiles(ctx context.Context, files []*entity.File) chan *Result[*entity.File] {
-	out := make(chan *Result[*entity.File])
+func (u *ChanUseCase) UploadFiles(ctx context.Context, files []*entity.File) chan *ucboundary.Result[*entity.File] {
+	out := make(chan *ucboundary.Result[*entity.File])
 	var wg sync.WaitGroup
 
 	for _, file := range files {
@@ -31,9 +29,9 @@ func (u *ChanUseCase) UploadFiles(ctx context.Context, files []*entity.File) cha
 				return
 			default:
 				if err := u.Uploader.Upload(ctx, file); err != nil {
-					out <- &Result[*entity.File]{Value: nil, Err: err}
+					out <- &ucboundary.Result[*entity.File]{Value: nil, Err: err}
 				} else {
-					out <- &Result[*entity.File]{Value: file, Err: nil}
+					out <- &ucboundary.Result[*entity.File]{Value: file, Err: nil}
 				}
 			}
 		}(file)

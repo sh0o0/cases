@@ -2,9 +2,12 @@ package usecase
 
 import (
 	"cases/internal/entity"
+	"cases/internal/usecase/ucboundary"
 	"context"
 	"iter"
 )
+
+var _ ucboundary.IterUseCase = (*IterUseCase)(nil)
 
 type IterUseCase struct {
 	Uploader Uploader
